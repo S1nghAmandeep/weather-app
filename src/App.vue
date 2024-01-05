@@ -17,6 +17,7 @@ export default {
 
   methods: {
     getCoordinate() {
+      document.body.classList.add('blurred')
       axios.get('https://nominatim.openstreetmap.org/search?format=json&limit=3&q=' + store.city)
         .then(res => {
           store.coordinate = res.data[0]
@@ -30,9 +31,8 @@ export default {
           }).then(res => {
             console.log(res.data);
             store.todayTemprature = res.data.daily.temperature_2m_max;
-            store.todayTemprature = store.todayTemprature.map(function (num) {
-              return Number(num.toFixed(0));
-            })
+            // console.log(store.todayTemprature);
+            store.todayTemprature = store.todayTemprature.map(num => Math.round(num))
             store.weatherCode = res.data.daily.weather_code
             store.time = res.data.daily.time
 
@@ -45,11 +45,13 @@ export default {
             })
 
             store.weekWeather.shift()
-            // console.log(store.todayTemprature, store.weatherCode, store.time);
-            console.log(store.weekWeather);
+            console.log(store.todayTemprature, store.weatherCode, store.time);
           })
         })
       store.city = ''
+      setTimeout(() => {
+        document.body.classList.remove('blurred')
+      }, 200);
     },
   },
 
@@ -61,7 +63,7 @@ export default {
 
 </script>
 
-<template>
+<template class="blured">
   <header>
     <h1> Search weather of your city </h1>
     <div class="search">

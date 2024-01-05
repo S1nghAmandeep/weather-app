@@ -12,50 +12,7 @@ export default {
   },
 
   methods: {
-    getWeatherIcons() {
-      const weatherCode = store.weatherCode[0]
-      switch (weatherCode) {
-        case 0:
-          return ['fas', 'sun']
-        case 1:
-        case 2:
-        case 3:
-          return ['fas', 'cloud-sun']
-        case 45:
-        case 48:
-          return ['fas', 'smog',]
-        case 51:
-        case 53:
-        case 55:
-        case 56:
-        case 57:
-          return ['fas', 'cloud-rain']
-        case 61:
-        case 63:
-        case 65:
-        case 66:
-        case 67:
-          return ['fas', 'cloud-showers-heavy']
-        case 71:
-        case 73:
-        case 75:
-        case 77:
-        case 85:
-        case 86:
-          return ['fas', 'snowflake']
-        case 80:
-        case 81:
-        case 82:
-          return ['fas', 'cloud-showers-water']
-        case 95:
-        case 96:
-        case 99:
-          return ['fas', 'cloud-bolt']
-      }
-    },
-
-    getWeekDaysIcons(weatherCode) {
-
+    getWeatherIcons(weatherCode) {
       switch (weatherCode) {
         case 0:
           return ['fas', 'sun']
@@ -97,8 +54,6 @@ export default {
     },
 
     getDate(dateStr) {
-      // const date = new Date(dateStr)
-      // console.log(date.toUTCString());
       const date = this.DateTime.fromFormat(dateStr, 'yyyy-LL-dd').toFormat('cccc')
       // console.log(date);
       return date
@@ -117,7 +72,7 @@ export default {
         <p class="place">{{ store.coordinate.display_name }}</p>
       </div>
       <div class="icon">
-        <font-awesome-icon :icon="getWeatherIcons()" />
+        <font-awesome-icon :icon="getWeatherIcons(store.weatherCode[0])" />
         <p class="today">Today</p>
       </div>
     </div>
@@ -126,7 +81,7 @@ export default {
     <div class="card-days">
       <div class="days" v-for="(weather, i) in store.weekWeather">
         <div class="sm-icon">
-          <font-awesome-icon :icon="getWeekDaysIcons(weather.iconCode)" />
+          <font-awesome-icon :icon="getWeatherIcons(weather.iconCode)" />
           {{ weather.maxTemp }}&deg;
         </div>
         <p>{{ getDate(weather.timestamp) }}</p>

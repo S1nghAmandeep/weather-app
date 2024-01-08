@@ -50,6 +50,9 @@ export default {
         case 96:
         case 99:
           return ['fas', 'cloud-bolt']
+
+        default:
+          return ['fas', 'sun'];
       }
     },
 

@@ -58,7 +58,7 @@ export default {
   mounted() {
     this.store.city = 'Lonigo'
     this.getCoordinate()
-  },
+  }
 }
 
 </script>
